@@ -168,11 +168,13 @@ public class ContentRegistry {
 		BlockKVM.setCreativeTab(CreativeTab);
 		GameRegistry.registerTileEntity(TileEntityKVM.class, OpenSecurity.MODID + ".KVMTE");
 
-		DisplayPanel = new BlockDisplayPanel();
+		/*		
+ 		DisplayPanel = new BlockDisplayPanel();
 		GameRegistry.registerBlock(DisplayPanel, OpenSecurity.MODID + ".DisplayPanel");
 		DisplayPanel.setCreativeTab(CreativeTab);
 		
 		GameRegistry.registerTileEntity(TileEntityDisplayPanel.class, OpenSecurity.MODID + ".DisplayPanelTE");
+		*/
 		
 		OpenSecurity.logger.info("Registered Blocks");
 	}

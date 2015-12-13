@@ -1,5 +1,8 @@
 package pcl.opensecurity.tileentity;
 
+import li.cil.oc.api.network.Environment;
+import li.cil.oc.api.network.Message;
+import li.cil.oc.api.network.Node;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import pcl.opensecurity.OpenSecurity;
@@ -9,7 +12,7 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileEntityMachineBase extends TileEntity {
+public class TileEntityMachineBase extends TileEntity implements Environment {
 
 	public TileEntityMachineBase() {
 		super();
@@ -83,6 +86,30 @@ public class TileEntityMachineBase extends TileEntity {
 
 	public void setSoundRes(ResourceLocation soundRes) {
 		this.soundRes = soundRes;
+	}
+
+	@Override
+	public Node node() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void onConnect(Node arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDisconnect(Node arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMessage(Message arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

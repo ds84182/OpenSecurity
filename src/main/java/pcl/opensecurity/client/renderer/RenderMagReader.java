@@ -1,23 +1,21 @@
-/**
- * 
- */
 package pcl.opensecurity.client.renderer;
 
-import org.lwjgl.opengl.GL11;
-
-import pcl.opensecurity.OpenSecurity;
-import pcl.opensecurity.tileentity.TileEntityDisplayPanel;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 
+import org.lwjgl.opengl.GL11;
+
+import pcl.opensecurity.OpenSecurity;
+import pcl.opensecurity.tileentity.TileEntityDisplayPanel;
+
 /**
  * @author Caitlyn
  *
  */
-public class RenderDisplayPanel extends TileEntitySpecialRenderer {
+public class RenderMagReader extends TileEntitySpecialRenderer {
 
 	public Integer ticks = 0;
 	public String text = null;
@@ -38,6 +36,7 @@ public class RenderDisplayPanel extends TileEntitySpecialRenderer {
 
 		int dir = tileEntity.getBlockMetadata();
 
+		OpenSecurity.logger.info(dir);
 		GL11.glNormal3f(0, 1, 0);
 		if (dir == 2) {
 			GL11.glTranslatef((float)x +.501F, (float)y + .972F, (float)z + 0F);

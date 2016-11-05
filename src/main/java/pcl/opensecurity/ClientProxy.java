@@ -63,18 +63,21 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	public void listFilesForFolder(final File folder) {
-		AlarmResource r = new AlarmResource();
-		int i = 1;
-	    for (final File fileEntry : folder.listFiles()) {
-	        if (fileEntry.isDirectory()) {
-	            listFilesForFolder(fileEntry);
-	        } else {
-	        	r.addSoundReferenceMapping(i, fileEntry.getName()); //add map soundlocation -> recordX
-	        	i++;
-	            System.out.println(OpenSecurity.alarmSounds + File.separator + fileEntry.getName());
-	        }
-	    }
-	    r.registerAsResourceLocation(); //finalise IResourcePack
+		File[] files = folder.listFiles();
+		if (files != null) {
+			AlarmResource r = new AlarmResource();
+			int i = 1;
+			for (final File fileEntry : files) {
+				if (fileEntry.isDirectory()) {
+					listFilesForFolder(fileEntry);
+				} else {
+					r.addSoundReferenceMapping(i, fileEntry.getName()); //add map soundlocation -> recordX
+					i++;
+					System.out.println(OpenSecurity.alarmSounds + File.separator + fileEntry.getName());
+				}
+			}
+			r.registerAsResourceLocation(); //finalise IResourcePack
+		}
 	}
 	
 	@Override

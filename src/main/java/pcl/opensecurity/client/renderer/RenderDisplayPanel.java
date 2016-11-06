@@ -5,7 +5,6 @@ package pcl.opensecurity.client.renderer;
 
 import org.lwjgl.opengl.GL11;
 
-import pcl.opensecurity.OpenSecurity;
 import pcl.opensecurity.tileentity.TileEntityDisplayPanel;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -18,11 +17,13 @@ import net.minecraft.tileentity.TileEntity;
  *
  */
 public class RenderDisplayPanel extends TileEntitySpecialRenderer {
+	private static final float X_OFFSET = 0.5F;
+	private static final float Y_OFFSET = 1F - 0.125F;
+	private static final float Z_OFFSET = 0.01F;
 
-	public Integer ticks = 0;
-	public String text = null;
-	String output = "";
-	int count = 0;
+	private int ticks = 0;
+	private String output = "";
+	private int count = 0;
 	
 	@Override
 	public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f) {
@@ -41,16 +42,16 @@ public class RenderDisplayPanel extends TileEntitySpecialRenderer {
 		//OpenSecurity.logger.info(dir);
 		GL11.glNormal3f(0, 1, 0);
 		if (dir == 2) {
-			GL11.glTranslatef((float)x +.501F, (float)y + .972F, (float)z + 0F);
+			GL11.glTranslatef((float)x + X_OFFSET, (float)y + Y_OFFSET, (float)z - Z_OFFSET);
 			GL11.glRotatef(0F, 0F, 1F, 0F);
 		} else if (dir == 5) {
-			GL11.glTranslatef((float)x + 1.01f, (float)y + .972F, (float)z + .5F);
+			GL11.glTranslatef((float)x + 1f + Z_OFFSET, (float)y + Y_OFFSET, (float)z + X_OFFSET);
 			GL11.glRotatef(270F, 0F, 1F, 0F);
 		} else if (dir == 3) {
-			GL11.glTranslatef((float)x + .5f, (float)y + .972F, (float)z + 1.01F);
+			GL11.glTranslatef((float)x + X_OFFSET, (float)y + Y_OFFSET, (float)z + 1F + Z_OFFSET);
 			GL11.glRotatef(180F, 0F, 1F, 0F);
 		} else if (dir == 4) {
-			GL11.glTranslatef((float)x - .01f, (float)y + .972F, (float)z + .5f);
+			GL11.glTranslatef((float)x - Z_OFFSET, (float)y + Y_OFFSET, (float)z + X_OFFSET);
 			GL11.glRotatef(90, 0F, 1F, 0F);
 		}
 
@@ -72,7 +73,7 @@ public class RenderDisplayPanel extends TileEntitySpecialRenderer {
 		GL11.glPopMatrix();
 	}
 
-	public String scrollText(String text) {
+	private String scrollText(String text) {
 		FontRenderer fontRenderer = RenderManager.instance.getFontRenderer();
 		text = "       " + text + "        ";
 		if (text.length() > count + 6) {

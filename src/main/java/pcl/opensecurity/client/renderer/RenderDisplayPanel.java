@@ -3,6 +3,7 @@
  */
 package pcl.opensecurity.client.renderer;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import org.lwjgl.opengl.GL11;
 
@@ -23,11 +24,10 @@ public class RenderDisplayPanel extends TileEntitySpecialRenderer {
 	private static final float Z_OFFSET = 0.01F;
 	private static final int RESOLUTION = 60;
 	private static final float INV_RESOLUTION = 1.0F/(float)RESOLUTION;
-
-	private int ticks = 0;
 	
 	@Override
 	public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f) {
+		f *= Minecraft.getMinecraft().isGamePaused() ? 0.0f : 1.0f;
 		TileEntityDisplayPanel panel = (TileEntityDisplayPanel) tileEntity;
 
 		float light = tileEntity.getWorldObj().getLightBrightnessForSkyBlocks(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, 15);
@@ -79,12 +79,19 @@ public class RenderDisplayPanel extends TileEntitySpecialRenderer {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		++this.ticks;
+
+		panel.scrollLines(f*(RESOLUTION/16.0f));
+
+		// TODO: More lines
 		int outputWidth = fontRenderer.getStringWidth(panel.getScreenText());
-		if (ticks > outputWidth+60) {
-			ticks = -60;
+		float scroll = panel.getLineScroll()-(float)RESOLUTION;
+		if (scroll > outputWidth+RESOLUTION) {
+			scroll = -RESOLUTION;
+			panel.setLineScroll(scroll);
 		}
-		fontRenderer.drawString(panel.getScreenText(), -ticks, 0, panel.getScreenColor());
+		GL11.glTranslatef(-scroll, 0.0f, 0.0f);
+		fontRenderer.drawString(panel.getScreenText(), 0, 0, panel.getScreenColor());
+
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
